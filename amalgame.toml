@@ -1,0 +1,27 @@
+# Package manifest — amalgame-framework-random
+#
+# Pure-Amalgame random facade — PCG-32 deterministic stream +
+# crypto-grade entropy via /dev/urandom / BCryptGenRandom.
+# Originally bundled in amc's src/stdlib/random.am; extracted into
+# this external package as part of the framework split (project F
+# follow-up, amc >= 0.7.5).
+#
+# Installation:
+#
+#   amc package add random                  # via curated index
+#   amc package add github.com/amalgame-lang/amalgame-framework-random@v0.1.0
+
+[package]
+name              = "amalgame-framework-random"
+version           = "0.1.0"
+license           = "Apache-2.0"
+description       = "Pure-Amalgame random facade: PCG-32 stream + crypto-grade entropy."
+authors           = ["Bastien Mouget"]
+required-amalgame = ">=0.7.6"
+schema-version    = 1
+
+[stdlib]
+class     = "Random"
+header    = "facade-stub.h"
+namespace = "Amalgame.Random"
+facade    = "facade.am"

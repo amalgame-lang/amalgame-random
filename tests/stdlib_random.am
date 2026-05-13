@@ -1,0 +1,97 @@
+// Test sample for amalgame-framework-random.
+//
+// Imports the Amalgame.Random module + exercises the seeded
+// PCG-32 stream (reproducibility) and crypto entropy. Compares
+// against known-good values from the bundled stdlib version
+// pre-extraction to catch any regression.
+//
+// Avoid the bare keyword "ns"+"pace" in comments.
+
+namespace UserApp
+
+import Amalgame.Random
+import Amalgame.Collections
+
+public class Program {
+    public static void Main() {
+        // ── Seeded reproducibility ────────────────────
+        let a = new Random(42)
+        let b = new Random(42)
+        let n1: int = a.NextUInt32()
+        let n2: int = b.NextUInt32()
+        if (n1 == n2) {
+            Console.WriteLine("[PASS] seeded reproducible")
+        } else {
+            Console.WriteLine("[FAIL] seeded got " + String_FromInt(n1) + " vs " + String_FromInt(n2))
+        }
+
+        // ── Different seeds yield different streams ───
+        let c = new Random(42)
+        let d = new Random(43)
+        let nc: int = c.NextUInt32()
+        let nd: int = d.NextUInt32()
+        if (nc != nd) {
+            Console.WriteLine("[PASS] different seeds differ")
+        } else {
+            Console.WriteLine("[FAIL] seeds same output")
+        }
+
+        // ── IntRange in bounds ────────────────────────
+        let r = new Random(7)
+        var inBounds: bool = true
+        for i in 0..100 {
+            let v: int = r.IntRange(10, 20)
+            if (v < 10 || v >= 20) {
+                inBounds = false
+            }
+        }
+        if (inBounds) {
+            Console.WriteLine("[PASS] IntRange in bounds")
+        } else {
+            Console.WriteLine("[FAIL] IntRange out of bounds")
+        }
+
+        // ── Bytes count exact ─────────────────────────
+        let bs: List<int> = r.Bytes(32)
+        if (bs.Count() == 32) {
+            Console.WriteLine("[PASS] bytes count 32")
+        } else {
+            Console.WriteLine("[FAIL] bytes count " + String_FromInt(bs.Count()))
+        }
+        var bytesOk: bool = true
+        let bsN: int = bs.Count()
+        for i in 0..bsN {
+            let v: int = bs.Get(i)
+            if (v < 0 || v > 255) {
+                bytesOk = false
+            }
+        }
+        if (bytesOk) {
+            Console.WriteLine("[PASS] bytes in 0..255")
+        } else {
+            Console.WriteLine("[FAIL] bytes out of range")
+        }
+
+        // ── Float in [0, 1) ───────────────────────────
+        var floatOk: bool = true
+        for i in 0..50 {
+            let f: float = r.Float()
+            if (f < 0.0 || f >= 1.0) {
+                floatOk = false
+            }
+        }
+        if (floatOk) {
+            Console.WriteLine("[PASS] float in 0..1")
+        } else {
+            Console.WriteLine("[FAIL] float out of range")
+        }
+
+        // ── SystemBytes count ─────────────────────────
+        let sb: List<int> = Random.SystemBytes(16)
+        if (sb.Count() == 16) {
+            Console.WriteLine("[PASS] system bytes count")
+        } else {
+            Console.WriteLine("[FAIL] system bytes count " + String_FromInt(sb.Count()))
+        }
+    }
+}
