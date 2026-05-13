@@ -1,4 +1,4 @@
-# NOTICE — amalgame-framework-random
+# NOTICE — amalgame-random
 
 ## Authorship
 

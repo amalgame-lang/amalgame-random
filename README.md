@@ -1,4 +1,4 @@
-# amalgame-framework-random
+# amalgame-random
 
 Pure-Amalgame random facade for [Amalgame](https://github.com/amalgame-lang/Amalgame).
 **PCG-32** deterministic stream + crypto-grade entropy.
@@ -10,7 +10,7 @@ this external package as part of the framework split (post-v0.7.5).
 
 ```bash
 amc package add random                  # via the curated index
-amc package add github.com/amalgame-lang/amalgame-framework-random@v0.1.0
+amc package add github.com/amalgame-lang/amalgame-random@v0.1.0
 ```
 
 Requires **amc 0.7.6+** for the facade pre-compile pipeline

@@ -1,6 +1,6 @@
 #!/bin/bash
 # ─────────────────────────────────────────────────────
-#  amalgame-framework-random — Test Runner
+#  amalgame-random — Test Runner
 #  Usage: ./tests/run_tests.sh [/path/to/amc]
 #
 #  Stages a fake package cache pointing at the local working tree,
@@ -75,7 +75,7 @@ SKIP=0
 
 echo ""
 echo "════════════════════════════════════════════"
-echo "  amalgame-framework-random — Test Suite"
+echo "  amalgame-random — Test Suite"
 echo "════════════════════════════════════════════"
 echo "  amc:     $AMC ($("$AMC" --version 2>&1 | head -1))"
 echo "  package: $PKG_ROOT"
@@ -84,7 +84,7 @@ echo "  runtime: $AMC_RUNTIME"
 # ── Stage a fake cache pointing at the local working tree ──
 # Avoid going through `amc package add` (no published tag in CI).
 FAKE_CACHE="$BUILD_DIR/cache"
-PKG_GIT="github.com/amalgame-lang/amalgame-framework-random"
+PKG_GIT="github.com/amalgame-lang/amalgame-random"
 PKG_TAG="${PKG_TAG:-v0.1.0}"
 FAKE_SHA="deadbeefcafebabe0000000000000000000000ab"
 SHORT_SHA="${FAKE_SHA:0:8}"
@@ -95,7 +95,7 @@ ln -s "$PKG_ROOT" "$PKG_CACHE_DIR"
 
 cat > "$PROJ_DIR/amalgame.lock" <<EOF
 [[package]]
-name = "amalgame-framework-random"
+name = "amalgame-random"
 git  = "$PKG_GIT"
 tag  = "$PKG_TAG"
 rev  = "$FAKE_SHA"
